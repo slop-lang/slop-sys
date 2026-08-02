@@ -1,0 +1,17 @@
+[package]
+name = "slop-rdf-sys"
+version = "0.1.0"
+edition = "2021"
+links = "slop_rdf"
+description = "Vendored slop-rdf C (rdf, index, list, vocab, xsd, common, ttl, serialize-ttl) as a -sys crate"
+license = "Apache-2.0"
+include = ["src/**/*", "csrc/**/*", "build.rs", "Cargo.toml"]
+
+[lib]
+name = "slop_rdf_sys"
+
+[dependencies]
+slop-std-sys = { path = "../slop-std-sys", version = "0.1.0" }
+
+[build-dependencies]
+cc = "1"

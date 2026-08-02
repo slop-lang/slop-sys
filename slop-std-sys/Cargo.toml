@@ -1,0 +1,14 @@
+[package]
+name = "slop-std-sys"
+version = "0.1.0"
+edition = "2021"
+links = "slop_std"
+description = "Vendored SLOP std C (strlib, file, thread) + canonical slop_runtime.h, as a -sys crate"
+license = "Apache-2.0"
+include = ["src/**/*", "csrc/**/*", "build.rs", "Cargo.toml"]
+
+[lib]
+name = "slop_std_sys"
+
+[build-dependencies]
+cc = "1"
