@@ -1,6 +1,6 @@
 [package]
 name = "slop-rdf-sys"
-version = "0.1.0"
+version = "0.3.0"
 edition = "2021"
 links = "slop_rdf"
 description = "Vendored slop-rdf C with RDF, Turtle, and Notation3 parsing and serialization"
