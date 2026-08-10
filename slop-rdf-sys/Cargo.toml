@@ -3,9 +3,13 @@ name = "slop-rdf-sys"
 version = "0.1.0"
 edition = "2021"
 links = "slop_rdf"
-description = "Vendored slop-rdf C (rdf, index, list, vocab, xsd, common, ttl, serialize-ttl) as a -sys crate"
+description = "Vendored slop-rdf C with RDF, Turtle, and Notation3 parsing and serialization"
 license = "Apache-2.0"
 include = ["src/**/*", "csrc/**/*", "build.rs", "Cargo.toml"]
+
+[package.metadata.slop-sys]
+slop-version = "0.1.2"
+slop-rdf-version = "0.3.0"
 
 [lib]
 name = "slop_rdf_sys"

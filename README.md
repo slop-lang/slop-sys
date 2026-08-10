@@ -8,12 +8,15 @@ This workspace contains two crates:
 | Crate | Contents |
 | --- | --- |
 | `slop-std-sys` | The SLOP runtime header and the string, file, and thread support libraries |
-| `slop-rdf-sys` | RDF data structures, indexing and vocabulary helpers, and Turtle parsing and serialization |
+| `slop-rdf-sys` | RDF data structures, indexing and vocabulary helpers, and Turtle and Notation3 parsing and serialization |
 
 `slop-rdf-sys` depends on `slop-std-sys`. Both crates compile their bundled C
 sources from `build.rs`, so consumers do not need to install the SLOP libraries
 separately. The crates provide native libraries and header paths for downstream
 build scripts; they do not currently expose Rust FFI declarations.
+
+The current RDF snapshot was generated from `slop-rdf` v0.3.0 with SLOP v0.1.2.
+These versions are also recorded in `slop-rdf-sys` package metadata.
 
 ## Requirements
 
@@ -56,7 +59,7 @@ slop-std-sys/
   csrc/src/       Standard support C sources and headers
 slop-rdf-sys/
   csrc/runtime/   Runtime header used to compile the RDF library
-  csrc/src/       RDF and Turtle C sources and headers
+  csrc/src/       RDF, Turtle, and Notation3 C sources and headers
 ```
 
 ## License
