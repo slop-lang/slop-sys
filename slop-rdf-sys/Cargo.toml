@@ -2,10 +2,16 @@
 name = "slop-rdf-sys"
 version = "0.3.0"
 edition = "2021"
+rust-version = "1.63"
 links = "slop_rdf"
 description = "Vendored slop-rdf C with RDF, Turtle, and Notation3 parsing and serialization"
 license = "Apache-2.0"
-include = ["src/**/*", "csrc/**/*", "build.rs", "Cargo.toml"]
+repository = "https://github.com/slop-lang/slop-sys"
+readme = "README.md"
+keywords = ["slop", "ffi", "rdf", "turtle", "notation3"]
+categories = ["external-ffi-bindings", "parser-implementations"]
+publish = ["crates-io"]
+include = ["src/**/*", "tests/**/*", "csrc/**/*", "build.rs", "Cargo.toml", "README.md", "LICENSE"]
 
 [package.metadata.slop-sys]
 slop-version = "0.1.2"
@@ -15,7 +21,7 @@ slop-rdf-version = "0.3.0"
 name = "slop_rdf_sys"
 
 [dependencies]
-slop-std-sys = { path = "../slop-std-sys", version = "0.1.0" }
+slop-std-sys = { path = "../slop-std-sys", version = "0.1.2" }
 
 [build-dependencies]
 cc = "1"

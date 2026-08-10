@@ -7,8 +7,8 @@ This workspace contains two crates:
 
 | Crate | Contents |
 | --- | --- |
-| `slop-std-sys` | The SLOP runtime header and the string, file, and thread support libraries |
-| `slop-rdf-sys` | RDF data structures, indexing and vocabulary helpers, and Turtle and Notation3 parsing and serialization |
+| [`slop-std-sys`](slop-std-sys/README.md) | The SLOP runtime header and the string, file, and thread support libraries |
+| [`slop-rdf-sys`](slop-rdf-sys/README.md) | RDF data structures, indexing and vocabulary helpers, and Turtle and Notation3 parsing and serialization |
 
 `slop-rdf-sys` depends on `slop-std-sys`. Both crates compile their bundled C
 sources from `build.rs`, so consumers do not need to install the SLOP libraries
@@ -38,8 +38,15 @@ Run the workspace checks and tests:
 cargo test --workspace
 ```
 
-To use the crates from another workspace before they are published, add path
-dependencies:
+Use the published crates from another Cargo project:
+
+```toml
+[dependencies]
+slop-std-sys = "0.1.2"
+slop-rdf-sys = "0.3.0"
+```
+
+For local development, use path dependencies instead:
 
 ```toml
 [dependencies]
@@ -51,6 +58,10 @@ Depending on `slop-rdf-sys` also builds and links `slop-std-sys`. Cargo exposes
 the crates' public C header directories to downstream build scripts through
 `DEP_SLOP_STD_INCLUDE` and `DEP_SLOP_RDF_INCLUDE`, respectively.
 
+Consumers compiling C sources against the RDF, Turtle, or Notation3 headers
+should depend directly on both crates so both include-directory variables are
+available to their build script.
+
 ## Repository layout
 
 ```text
@@ -61,6 +72,11 @@ slop-rdf-sys/
   csrc/runtime/   Runtime header used to compile the RDF library
   csrc/src/       RDF, Turtle, and Notation3 C sources and headers
 ```
+
+## Releasing
+
+See [RELEASING.md](RELEASING.md) for the release checks, publication order, and
+tagging procedure.
 
 ## License
 

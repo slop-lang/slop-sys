@@ -6,7 +6,12 @@ fn main() {
     let csrc = Path::new("csrc/src");
     let runtime = Path::new("csrc/runtime");
 
-    let sources = ["slop_strlib.c", "slop_file.c", "slop_thread.c", "slop_std_shim.c"];
+    let sources = [
+        "slop_strlib.c",
+        "slop_file.c",
+        "slop_thread.c",
+        "slop_std_shim.c",
+    ];
 
     let mut build = cc::Build::new();
     build
@@ -16,7 +21,9 @@ fn main() {
         .define("SLOP_INTERN_THREADSAFE", None)
         .opt_level(2)
         .warnings(false);
-    for s in &sources { build.file(csrc.join(s)); }
+    for s in &sources {
+        build.file(csrc.join(s));
+    }
     build.compile("slop_std");
 
     println!("cargo:include={}", manifest.join("csrc/src").display());
