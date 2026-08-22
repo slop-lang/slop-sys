@@ -108,16 +108,16 @@ slop_result_n3_FormulaResult_common_ParseError n3_parse_formula(slop_arena* aren
                             while (!(n3_is_formula_end(common_state_peek(cur_ctx.ttl_ctx.state)))) {
                                 {
                                     __auto_type triple_result = n3_parse_n3_triple(arena, cur_ctx);
-                                    __auto_type _mv_114 = triple_result;
-                                    if (_mv_114.is_ok) {
-                                        __auto_type tr = _mv_114.data.ok;
+                                    __auto_type _mv_116 = triple_result;
+                                    if (_mv_116.is_ok) {
+                                        __auto_type tr = _mv_116.data.ok;
                                         cur_ctx = tr.ctx;
                                         {
                                             __auto_type s2 = common_skip_whitespace(arena, cur_ctx.ttl_ctx.state);
                                             cur_ctx = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = cur_ctx.ttl_ctx.prefixes, .base_iri = cur_ctx.ttl_ctx.base_iri, .blank_labels = cur_ctx.ttl_ctx.blank_labels, .blank_counter = cur_ctx.ttl_ctx.blank_counter, .state = s2}), .formula_counter = cur_ctx.formula_counter, .in_formula = cur_ctx.in_formula, .current_formula_id = cur_ctx.current_formula_id});
                                         }
-                                    } else if (!_mv_114.is_ok) {
-                                        __auto_type e = _mv_114.data.err;
+                                    } else if (!_mv_116.is_ok) {
+                                        __auto_type e = _mv_116.data.err;
                                         return ((slop_result_n3_FormulaResult_common_ParseError){ .is_ok = false, .data.err = e });
                                         /* empty list */;
                                     }
@@ -147,14 +147,15 @@ slop_result_n3_N3TermResult_common_ParseError n3_parse_path_expression(slop_aren
                 __auto_type ctx1 = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = ctx.ttl_ctx.prefixes, .base_iri = ctx.ttl_ctx.base_iri, .blank_labels = ctx.ttl_ctx.blank_labels, .blank_counter = ctx.ttl_ctx.blank_counter, .state = s1}), .formula_counter = ctx.formula_counter, .in_formula = ctx.in_formula, .current_formula_id = ctx.current_formula_id});
                 {
                     __auto_type pred_result = n3_parse_n3_term(arena, ctx1);
-                    __auto_type _mv_115 = pred_result;
-                    if (_mv_115.is_ok) {
-                        __auto_type pr = _mv_115.data.ok;
+                    __auto_type _mv_117 = pred_result;
+                    if (_mv_117.is_ok) {
+                        __auto_type pr = _mv_117.data.ok;
                         return ((slop_result_n3_N3TermResult_common_ParseError){ .is_ok = true, .data.ok = ((n3_N3TermResult){.term = pr.term, .ctx = pr.ctx}) });
-                    } else if (!_mv_115.is_ok) {
-                        __auto_type e = _mv_115.data.err;
+                    } else if (!_mv_117.is_ok) {
+                        __auto_type e = _mv_117.data.err;
                         return ((slop_result_n3_N3TermResult_common_ParseError){ .is_ok = false, .data.err = e });
                     }
+                    SLOP_UNREACHABLE();
                 }
             }
         }
@@ -167,23 +168,24 @@ slop_result_n3_N3TermResult_common_ParseError n3_parse_n3_term(slop_arena* arena
         if (n3_is_formula_start(c)) {
             {
                 __auto_type f_result = n3_parse_formula(arena, ctx);
-                __auto_type _mv_116 = f_result;
-                if (_mv_116.is_ok) {
-                    __auto_type fr = _mv_116.data.ok;
+                __auto_type _mv_118 = f_result;
+                if (_mv_118.is_ok) {
+                    __auto_type fr = _mv_118.data.ok;
                     return ((slop_result_n3_N3TermResult_common_ParseError){ .is_ok = true, .data.ok = ((n3_N3TermResult){.term = ((n3_N3Term){ .tag = n3_N3Term_n3_formula, .data.n3_formula = fr.formula }), .ctx = fr.ctx}) });
-                } else if (!_mv_116.is_ok) {
-                    __auto_type e = _mv_116.data.err;
+                } else if (!_mv_118.is_ok) {
+                    __auto_type e = _mv_118.data.err;
                     return ((slop_result_n3_N3TermResult_common_ParseError){ .is_ok = false, .data.err = e });
                 }
+                SLOP_UNREACHABLE();
             }
         } else if (n3_is_quick_var_start(c)) {
             return n3_parse_quick_variable(arena, ctx);
         } else {
             {
                 __auto_type t_result = ttl_parse_term(arena, ctx.ttl_ctx);
-                __auto_type _mv_117 = t_result;
-                if (_mv_117.is_ok) {
-                    __auto_type tr = _mv_117.data.ok;
+                __auto_type _mv_119 = t_result;
+                if (_mv_119.is_ok) {
+                    __auto_type tr = _mv_119.data.ok;
                     {
                         __auto_type new_ctx = ((n3_N3ParseContext){.ttl_ctx = tr.ctx, .formula_counter = ctx.formula_counter, .in_formula = ctx.in_formula, .current_formula_id = ctx.current_formula_id});
                         if (n3_is_path_operator(common_state_peek(tr.ctx.state))) {
@@ -192,10 +194,11 @@ slop_result_n3_N3TermResult_common_ParseError n3_parse_n3_term(slop_arena* arena
                             return ((slop_result_n3_N3TermResult_common_ParseError){ .is_ok = true, .data.ok = ((n3_N3TermResult){.term = ((n3_N3Term){ .tag = n3_N3Term_n3_rdf, .data.n3_rdf = tr.term }), .ctx = new_ctx}) });
                         }
                     }
-                } else if (!_mv_117.is_ok) {
-                    __auto_type e = _mv_117.data.err;
+                } else if (!_mv_119.is_ok) {
+                    __auto_type e = _mv_119.data.err;
                     return ((slop_result_n3_N3TermResult_common_ParseError){ .is_ok = false, .data.err = e });
                 }
+                SLOP_UNREACHABLE();
             }
         }
     }
@@ -204,27 +207,27 @@ slop_result_n3_N3TermResult_common_ParseError n3_parse_n3_term(slop_arena* arena
 slop_result_n3_N3TripleResult_common_ParseError n3_parse_n3_triple(slop_arena* arena, n3_N3ParseContext ctx) {
     {
         __auto_type sub_result = n3_parse_n3_term(arena, ctx);
-        __auto_type _mv_118 = sub_result;
-        if (_mv_118.is_ok) {
-            __auto_type sr = _mv_118.data.ok;
+        __auto_type _mv_120 = sub_result;
+        if (_mv_120.is_ok) {
+            __auto_type sr = _mv_120.data.ok;
             {
                 __auto_type s1 = common_skip_whitespace(arena, sr.ctx.ttl_ctx.state);
                 {
                     __auto_type ctx1 = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = sr.ctx.ttl_ctx.prefixes, .base_iri = sr.ctx.ttl_ctx.base_iri, .blank_labels = sr.ctx.ttl_ctx.blank_labels, .blank_counter = sr.ctx.ttl_ctx.blank_counter, .state = s1}), .formula_counter = sr.ctx.formula_counter, .in_formula = sr.ctx.in_formula, .current_formula_id = sr.ctx.current_formula_id});
                     {
                         __auto_type pred_result = n3_parse_n3_term(arena, ctx1);
-                        __auto_type _mv_119 = pred_result;
-                        if (_mv_119.is_ok) {
-                            __auto_type pr = _mv_119.data.ok;
+                        __auto_type _mv_121 = pred_result;
+                        if (_mv_121.is_ok) {
+                            __auto_type pr = _mv_121.data.ok;
                             {
                                 __auto_type s2 = common_skip_whitespace(arena, pr.ctx.ttl_ctx.state);
                                 {
                                     __auto_type ctx2 = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = pr.ctx.ttl_ctx.prefixes, .base_iri = pr.ctx.ttl_ctx.base_iri, .blank_labels = pr.ctx.ttl_ctx.blank_labels, .blank_counter = pr.ctx.ttl_ctx.blank_counter, .state = s2}), .formula_counter = pr.ctx.formula_counter, .in_formula = pr.ctx.in_formula, .current_formula_id = pr.ctx.current_formula_id});
                                     {
                                         __auto_type obj_result = n3_parse_n3_term(arena, ctx2);
-                                        __auto_type _mv_120 = obj_result;
-                                        if (_mv_120.is_ok) {
-                                            __auto_type objr = _mv_120.data.ok;
+                                        __auto_type _mv_122 = obj_result;
+                                        if (_mv_122.is_ok) {
+                                            __auto_type objr = _mv_122.data.ok;
                                             {
                                                 __auto_type s3 = common_skip_whitespace(arena, objr.ctx.ttl_ctx.state);
                                                 {
@@ -237,50 +240,54 @@ slop_result_n3_N3TripleResult_common_ParseError n3_parse_n3_triple(slop_arena* a
                                                     } else {
                                                         {
                                                             __auto_type s4 = common_expect_char(arena, s3, 46);
-                                                            __auto_type _mv_121 = s4;
-                                                            if (_mv_121.is_ok) {
-                                                                __auto_type s5 = _mv_121.data.ok;
+                                                            __auto_type _mv_123 = s4;
+                                                            if (_mv_123.is_ok) {
+                                                                __auto_type s5 = _mv_123.data.ok;
                                                                 return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = true, .data.ok = ((n3_N3TripleResult){.triple = ((n3_N3Triple){.subject = sr.term, .predicate = pr.term, .object = objr.term}), .ctx = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = objr.ctx.ttl_ctx.prefixes, .base_iri = objr.ctx.ttl_ctx.base_iri, .blank_labels = objr.ctx.ttl_ctx.blank_labels, .blank_counter = objr.ctx.ttl_ctx.blank_counter, .state = s5}), .formula_counter = objr.ctx.formula_counter, .in_formula = objr.ctx.in_formula, .current_formula_id = objr.ctx.current_formula_id})}) });
-                                                            } else if (!_mv_121.is_ok) {
-                                                                __auto_type e = _mv_121.data.err;
+                                                            } else if (!_mv_123.is_ok) {
+                                                                __auto_type e = _mv_123.data.err;
                                                                 return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                                                             }
+                                                            SLOP_UNREACHABLE();
                                                         }
                                                     }
                                                 }
                                             }
-                                        } else if (!_mv_120.is_ok) {
-                                            __auto_type e = _mv_120.data.err;
+                                        } else if (!_mv_122.is_ok) {
+                                            __auto_type e = _mv_122.data.err;
                                             return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                                         }
+                                        SLOP_UNREACHABLE();
                                     }
                                 }
                             }
-                        } else if (!_mv_119.is_ok) {
-                            __auto_type e = _mv_119.data.err;
+                        } else if (!_mv_121.is_ok) {
+                            __auto_type e = _mv_121.data.err;
                             return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                         }
+                        SLOP_UNREACHABLE();
                     }
                 }
             }
-        } else if (!_mv_118.is_ok) {
-            __auto_type e = _mv_118.data.err;
+        } else if (!_mv_120.is_ok) {
+            __auto_type e = _mv_120.data.err;
             return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
         }
+        SLOP_UNREACHABLE();
     }
 }
 
 uint8_t n3_is_implication_predicate(n3_N3Term term) {
-    __auto_type _mv_122 = term;
-    switch (_mv_122.tag) {
+    __auto_type _mv_124 = term;
+    switch (_mv_124.tag) {
         case n3_N3Term_n3_rdf:
         {
-            __auto_type t = _mv_122.data.n3_rdf;
-            __auto_type _mv_123 = t;
-            switch (_mv_123.tag) {
+            __auto_type t = _mv_124.data.n3_rdf;
+            __auto_type _mv_125 = t;
+            switch (_mv_125.tag) {
                 case rdf_Term_term_iri:
                 {
-                    __auto_type iri = _mv_123.data.term_iri;
+                    __auto_type iri = _mv_125.data.term_iri;
                     return string_eq(iri.value, SLOP_STR("http://www.w3.org/2000/10/swap/log#implies"));
                 }
                 default: {
@@ -295,16 +302,16 @@ uint8_t n3_is_implication_predicate(n3_N3Term term) {
 }
 
 uint8_t n3_is_reverse_implication_predicate(n3_N3Term term) {
-    __auto_type _mv_124 = term;
-    switch (_mv_124.tag) {
+    __auto_type _mv_126 = term;
+    switch (_mv_126.tag) {
         case n3_N3Term_n3_rdf:
         {
-            __auto_type t = _mv_124.data.n3_rdf;
-            __auto_type _mv_125 = t;
-            switch (_mv_125.tag) {
+            __auto_type t = _mv_126.data.n3_rdf;
+            __auto_type _mv_127 = t;
+            switch (_mv_127.tag) {
                 case rdf_Term_term_iri:
                 {
-                    __auto_type iri = _mv_125.data.term_iri;
+                    __auto_type iri = _mv_127.data.term_iri;
                     return string_eq(iri.value, SLOP_STR("http://www.w3.org/2000/10/swap/log#reverseImplies"));
                 }
                 default: {
@@ -319,16 +326,16 @@ uint8_t n3_is_reverse_implication_predicate(n3_N3Term term) {
 }
 
 uint8_t n3_is_equivalence_predicate(n3_N3Term term) {
-    __auto_type _mv_126 = term;
-    switch (_mv_126.tag) {
+    __auto_type _mv_128 = term;
+    switch (_mv_128.tag) {
         case n3_N3Term_n3_rdf:
         {
-            __auto_type t = _mv_126.data.n3_rdf;
-            __auto_type _mv_127 = t;
-            switch (_mv_127.tag) {
+            __auto_type t = _mv_128.data.n3_rdf;
+            __auto_type _mv_129 = t;
+            switch (_mv_129.tag) {
                 case rdf_Term_term_iri:
                 {
-                    __auto_type iri = _mv_127.data.term_iri;
+                    __auto_type iri = _mv_129.data.term_iri;
                     return string_eq(iri.value, SLOP_STR("http://www.w3.org/2000/10/swap/log#equivalence"));
                 }
                 default: {
@@ -345,66 +352,71 @@ uint8_t n3_is_equivalence_predicate(n3_N3Term term) {
 slop_result_n3_N3TripleResult_common_ParseError n3_parse_implication(slop_arena* arena, n3_N3ParseContext ctx) {
     {
         __auto_type ante_result = n3_parse_formula(arena, ctx);
-        __auto_type _mv_128 = ante_result;
-        if (_mv_128.is_ok) {
-            __auto_type ar = _mv_128.data.ok;
+        __auto_type _mv_130 = ante_result;
+        if (_mv_130.is_ok) {
+            __auto_type ar = _mv_130.data.ok;
             {
                 __auto_type s1 = common_skip_whitespace(arena, ar.ctx.ttl_ctx.state);
                 {
                     __auto_type s2 = common_expect_char(arena, s1, 61);
-                    __auto_type _mv_129 = s2;
-                    if (_mv_129.is_ok) {
-                        __auto_type s3 = _mv_129.data.ok;
+                    __auto_type _mv_131 = s2;
+                    if (_mv_131.is_ok) {
+                        __auto_type s3 = _mv_131.data.ok;
                         {
                             __auto_type s4 = common_expect_char(arena, s3, 62);
-                            __auto_type _mv_130 = s4;
-                            if (_mv_130.is_ok) {
-                                __auto_type s5 = _mv_130.data.ok;
+                            __auto_type _mv_132 = s4;
+                            if (_mv_132.is_ok) {
+                                __auto_type s5 = _mv_132.data.ok;
                                 {
                                     __auto_type s6 = common_skip_whitespace(arena, s5);
                                     {
                                         __auto_type ctx1 = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = ar.ctx.ttl_ctx.prefixes, .base_iri = ar.ctx.ttl_ctx.base_iri, .blank_labels = ar.ctx.ttl_ctx.blank_labels, .blank_counter = ar.ctx.ttl_ctx.blank_counter, .state = s6}), .formula_counter = ar.ctx.formula_counter, .in_formula = ar.ctx.in_formula, .current_formula_id = ar.ctx.current_formula_id});
                                         {
                                             __auto_type cons_result = n3_parse_formula(arena, ctx1);
-                                            __auto_type _mv_131 = cons_result;
-                                            if (_mv_131.is_ok) {
-                                                __auto_type cr = _mv_131.data.ok;
+                                            __auto_type _mv_133 = cons_result;
+                                            if (_mv_133.is_ok) {
+                                                __auto_type cr = _mv_133.data.ok;
                                                 {
                                                     __auto_type s7 = common_skip_whitespace(arena, cr.ctx.ttl_ctx.state);
                                                     {
                                                         __auto_type s8 = common_expect_char(arena, s7, 46);
-                                                        __auto_type _mv_132 = s8;
-                                                        if (_mv_132.is_ok) {
-                                                            __auto_type s9 = _mv_132.data.ok;
+                                                        __auto_type _mv_134 = s8;
+                                                        if (_mv_134.is_ok) {
+                                                            __auto_type s9 = _mv_134.data.ok;
                                                             return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = true, .data.ok = ((n3_N3TripleResult){.triple = ((n3_N3Triple){.subject = ((n3_N3Term){ .tag = n3_N3Term_n3_formula, .data.n3_formula = ar.formula }), .predicate = ((n3_N3Term){ .tag = n3_N3Term_n3_rdf, .data.n3_rdf = rdf_make_iri(arena, SLOP_STR("http://www.w3.org/2000/10/swap/log#implies")) }), .object = ((n3_N3Term){ .tag = n3_N3Term_n3_formula, .data.n3_formula = cr.formula })}), .ctx = ((n3_N3ParseContext){.ttl_ctx = ((ttl_TtlParseContext){.prefixes = cr.ctx.ttl_ctx.prefixes, .base_iri = cr.ctx.ttl_ctx.base_iri, .blank_labels = cr.ctx.ttl_ctx.blank_labels, .blank_counter = cr.ctx.ttl_ctx.blank_counter, .state = s9}), .formula_counter = cr.ctx.formula_counter, .in_formula = cr.ctx.in_formula, .current_formula_id = cr.ctx.current_formula_id})}) });
-                                                        } else if (!_mv_132.is_ok) {
-                                                            __auto_type e = _mv_132.data.err;
+                                                        } else if (!_mv_134.is_ok) {
+                                                            __auto_type e = _mv_134.data.err;
                                                             return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                                                         }
+                                                        SLOP_UNREACHABLE();
                                                     }
                                                 }
-                                            } else if (!_mv_131.is_ok) {
-                                                __auto_type e = _mv_131.data.err;
+                                            } else if (!_mv_133.is_ok) {
+                                                __auto_type e = _mv_133.data.err;
                                                 return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                                             }
+                                            SLOP_UNREACHABLE();
                                         }
                                     }
                                 }
-                            } else if (!_mv_130.is_ok) {
-                                __auto_type e = _mv_130.data.err;
+                            } else if (!_mv_132.is_ok) {
+                                __auto_type e = _mv_132.data.err;
                                 return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                             }
+                            SLOP_UNREACHABLE();
                         }
-                    } else if (!_mv_129.is_ok) {
-                        __auto_type e = _mv_129.data.err;
+                    } else if (!_mv_131.is_ok) {
+                        __auto_type e = _mv_131.data.err;
                         return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
                     }
+                    SLOP_UNREACHABLE();
                 }
             }
-        } else if (!_mv_128.is_ok) {
-            __auto_type e = _mv_128.data.err;
+        } else if (!_mv_130.is_ok) {
+            __auto_type e = _mv_130.data.err;
             return ((slop_result_n3_N3TripleResult_common_ParseError){ .is_ok = false, .data.err = e });
         }
+        SLOP_UNREACHABLE();
     }
 }
 
@@ -446,12 +458,12 @@ slop_result_n3_N3Graph_common_ParseError n3_parse_n3_string(slop_arena* arena, s
                     if (c == 64) {
                         {
                             __auto_type dir_result = ttl_parse_directive(arena, ctx.ttl_ctx);
-                            __auto_type _mv_133 = dir_result;
-                            if (_mv_133.is_ok) {
-                                __auto_type new_ttl_ctx = _mv_133.data.ok;
+                            __auto_type _mv_135 = dir_result;
+                            if (_mv_135.is_ok) {
+                                __auto_type new_ttl_ctx = _mv_135.data.ok;
                                 ctx = ((n3_N3ParseContext){.ttl_ctx = new_ttl_ctx, .formula_counter = ctx.formula_counter, .in_formula = ctx.in_formula, .current_formula_id = ctx.current_formula_id});
-                            } else if (!_mv_133.is_ok) {
-                                __auto_type e = _mv_133.data.err;
+                            } else if (!_mv_135.is_ok) {
+                                __auto_type e = _mv_135.data.err;
                                 return ((slop_result_n3_N3Graph_common_ParseError){ .is_ok = false, .data.err = e });
                                 /* empty list */;
                             }
@@ -460,13 +472,13 @@ slop_result_n3_N3Graph_common_ParseError n3_parse_n3_string(slop_arena* arena, s
                         if (c == 123) {
                             {
                                 __auto_type impl_result = n3_parse_implication(arena, ctx);
-                                __auto_type _mv_134 = impl_result;
-                                if (_mv_134.is_ok) {
-                                    __auto_type ir = _mv_134.data.ok;
+                                __auto_type _mv_136 = impl_result;
+                                if (_mv_136.is_ok) {
+                                    __auto_type ir = _mv_136.data.ok;
                                     g = n3_n3_graph_add_triple(arena, g, ir.triple);
                                     ctx = ir.ctx;
-                                } else if (!_mv_134.is_ok) {
-                                    __auto_type e = _mv_134.data.err;
+                                } else if (!_mv_136.is_ok) {
+                                    __auto_type e = _mv_136.data.err;
                                     return ((slop_result_n3_N3Graph_common_ParseError){ .is_ok = false, .data.err = e });
                                     /* empty list */;
                                 }
@@ -474,13 +486,13 @@ slop_result_n3_N3Graph_common_ParseError n3_parse_n3_string(slop_arena* arena, s
                         } else {
                             {
                                 __auto_type triple_result = n3_parse_n3_triple(arena, ctx);
-                                __auto_type _mv_135 = triple_result;
-                                if (_mv_135.is_ok) {
-                                    __auto_type tr = _mv_135.data.ok;
+                                __auto_type _mv_137 = triple_result;
+                                if (_mv_137.is_ok) {
+                                    __auto_type tr = _mv_137.data.ok;
                                     g = n3_n3_graph_add_triple(arena, g, tr.triple);
                                     ctx = tr.ctx;
-                                } else if (!_mv_135.is_ok) {
-                                    __auto_type e = _mv_135.data.err;
+                                } else if (!_mv_137.is_ok) {
+                                    __auto_type e = _mv_137.data.err;
                                     return ((slop_result_n3_N3Graph_common_ParseError){ .is_ok = false, .data.err = e });
                                     /* empty list */;
                                 }
@@ -502,33 +514,36 @@ slop_result_n3_N3Graph_n3_N3FileError n3_parse_n3_file(slop_arena* arena, slop_s
     SLOP_PRE(((string_len(path) > 0)), "(> (string-len path) 0)");
     {
         __auto_type f = file_file_open(path, file_FileMode_read);
-        __auto_type _mv_136 = f;
-        if (_mv_136.is_ok) {
-            __auto_type handle = _mv_136.data.ok;
+        __auto_type _mv_138 = f;
+        if (_mv_138.is_ok) {
+            __auto_type handle = _mv_138.data.ok;
             {
                 __auto_type content = file_file_read_all(arena, (&handle));
-                __auto_type _mv_137 = content;
-                if (_mv_137.is_ok) {
-                    __auto_type text = _mv_137.data.ok;
+                __auto_type _mv_139 = content;
+                if (_mv_139.is_ok) {
+                    __auto_type text = _mv_139.data.ok;
                     file_file_close((&handle));
-                    __auto_type _mv_138 = n3_parse_n3_string(arena, text);
-                    if (_mv_138.is_ok) {
-                        __auto_type g = _mv_138.data.ok;
+                    __auto_type _mv_140 = n3_parse_n3_string(arena, text);
+                    if (_mv_140.is_ok) {
+                        __auto_type g = _mv_140.data.ok;
                         return ((slop_result_n3_N3Graph_n3_N3FileError){ .is_ok = true, .data.ok = g });
-                    } else if (!_mv_138.is_ok) {
-                        __auto_type e = _mv_138.data.err;
+                    } else if (!_mv_140.is_ok) {
+                        __auto_type e = _mv_140.data.err;
                         return ((slop_result_n3_N3Graph_n3_N3FileError){ .is_ok = false, .data.err = ((n3_N3FileError){ .tag = n3_N3FileError_n3_parse_error, .data.n3_parse_error = e }) });
                     }
-                } else if (!_mv_137.is_ok) {
-                    __auto_type e = _mv_137.data.err;
+                    SLOP_UNREACHABLE();
+                } else if (!_mv_139.is_ok) {
+                    __auto_type e = _mv_139.data.err;
                     file_file_close((&handle));
                     return ((slop_result_n3_N3Graph_n3_N3FileError){ .is_ok = false, .data.err = ((n3_N3FileError){ .tag = n3_N3FileError_n3_file_error, .data.n3_file_error = e }) });
                 }
+                SLOP_UNREACHABLE();
             }
-        } else if (!_mv_136.is_ok) {
-            __auto_type e = _mv_136.data.err;
+        } else if (!_mv_138.is_ok) {
+            __auto_type e = _mv_138.data.err;
             return ((slop_result_n3_N3Graph_n3_N3FileError){ .is_ok = false, .data.err = ((n3_N3FileError){ .tag = n3_N3FileError_n3_file_error, .data.n3_file_error = e }) });
         }
+        SLOP_UNREACHABLE();
     }
 }
 

@@ -1,6 +1,6 @@
 [package]
 name = "slop-std-sys"
-version = "0.1.2"
+version = "0.2.1"
 edition = "2021"
 rust-version = "1.63"
 links = "slop_std"
@@ -12,6 +12,9 @@ keywords = ["slop", "ffi", "sys", "runtime"]
 categories = ["external-ffi-bindings"]
 publish = ["crates-io"]
 include = ["src/**/*", "tests/**/*", "csrc/**/*", "build.rs", "Cargo.toml", "README.md", "LICENSE"]
+
+[package.metadata.slop-sys]
+slop-version = "0.2.1"
 
 [lib]
 name = "slop_std_sys"

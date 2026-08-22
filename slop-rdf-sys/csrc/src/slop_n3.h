@@ -42,6 +42,7 @@ SLOP_OPTION_DEFINE(n3_Formula, slop_option_n3_Formula)
 
 #ifndef SLOP_LIST_N3_FORMULA_DEFINED
 #define SLOP_LIST_N3_FORMULA_DEFINED
+#define SLOP_LIST_N3_FORMULA_IMPL_DEFINED
 SLOP_LIST_DEFINE(n3_Formula, slop_list_n3_Formula)
 #endif
 
@@ -90,6 +91,7 @@ SLOP_OPTION_DEFINE(n3_N3Triple, slop_option_n3_N3Triple)
 
 #ifndef SLOP_LIST_N3_N3TRIPLE_DEFINED
 #define SLOP_LIST_N3_N3TRIPLE_DEFINED
+#define SLOP_LIST_N3_N3TRIPLE_IMPL_DEFINED
 SLOP_LIST_DEFINE(n3_N3Triple, slop_list_n3_N3Triple)
 #endif
 
