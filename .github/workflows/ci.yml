@@ -33,8 +33,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      # Cargo 1.63 resolves the newest dependencies even when they need a
+      # newer rustc; stable Cargo can pick versions that honor rust-version.
+      - run: cargo generate-lockfile
+        env:
+          CARGO_RESOLVER_INCOMPATIBLE_RUST_VERSIONS: fallback
       - uses: dtolnay/rust-toolchain@1.63.0
-      - run: cargo test --workspace --all-targets
+      - run: cargo +1.63.0 test --workspace --all-targets
 
   package:
     name: Package (Ubuntu)
