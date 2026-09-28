@@ -62,6 +62,6 @@ tags on the exact published commit. Do not move the existing workspace tags.
 
 ```sh
 git tag -a slop-std-sys-v0.3.0 -m "Release slop-std-sys 0.3.0"
-git tag -a slop-rdf-sys-v0.3.2 -m "Release slop-rdf-sys 0.3.2"
-git push origin slop-std-sys-v0.3.0 slop-rdf-sys-v0.3.2
+git tag -a slop-rdf-sys-v0.4.0 -m "Release slop-rdf-sys 0.4.0"
+git push origin slop-std-sys-v0.3.0 slop-rdf-sys-v0.4.0
 ```

@@ -8,7 +8,7 @@ The crate compiles its bundled C sources from `build.rs` and depends on
 `slop-std-sys` for runtime, string, and file symbols. It provides native linkage
 and headers, but does not currently expose Rust FFI declarations.
 
-The vendored snapshot contains `slop-rdf` 0.3.0 (commit `c14fe19`) generated with SLOP 0.3.0.
+The vendored snapshot contains `slop-rdf` 0.4.0 generated with SLOP 0.3.0.
 
 ## Usage
 
@@ -18,7 +18,7 @@ header directories available to your build script:
 
 ```toml
 [dependencies]
-slop-rdf-sys = "0.3.2"
+slop-rdf-sys = "0.4.0"
 slop-std-sys = "0.3.0"
 ```
 

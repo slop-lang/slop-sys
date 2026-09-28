@@ -1,6 +1,6 @@
 [package]
 name = "slop-rdf-sys"
-version = "0.3.2"
+version = "0.4.0"
 edition = "2021"
 rust-version = "1.63"
 links = "slop_rdf"
@@ -15,8 +15,7 @@ include = ["src/**/*", "tests/**/*", "csrc/**/*", "build.rs", "Cargo.toml", "REA
 
 [package.metadata.slop-sys]
 slop-version = "0.3.0"
-slop-rdf-version = "0.3.0"
-slop-rdf-commit = "c14fe190f69a964bf115e90af5ad5589d7f4b5b9"
+slop-rdf-version = "0.4.0"
 
 [lib]
 name = "slop_rdf_sys"
