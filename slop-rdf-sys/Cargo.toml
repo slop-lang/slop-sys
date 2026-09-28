@@ -1,6 +1,6 @@
 [package]
 name = "slop-rdf-sys"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 rust-version = "1.63"
 links = "slop_rdf"
@@ -14,14 +14,15 @@ publish = ["crates-io"]
 include = ["src/**/*", "tests/**/*", "csrc/**/*", "build.rs", "Cargo.toml", "README.md", "LICENSE"]
 
 [package.metadata.slop-sys]
-slop-version = "0.2.1"
+slop-version = "0.3.0"
 slop-rdf-version = "0.3.0"
+slop-rdf-commit = "c14fe190f69a964bf115e90af5ad5589d7f4b5b9"
 
 [lib]
 name = "slop_rdf_sys"
 
 [dependencies]
-slop-std-sys = { path = "../slop-std-sys", version = "0.2.1" }
+slop-std-sys = { path = "../slop-std-sys", version = "0.3.0" }
 
 [build-dependencies]
 cc = "1"

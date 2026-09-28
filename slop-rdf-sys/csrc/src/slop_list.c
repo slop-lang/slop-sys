@@ -20,22 +20,22 @@ slop_list_rdf_Term rdf_list_elements(slop_arena* arena, rdf_Graph g, rdf_Term he
             {
                 __auto_type first_matches = rdf_graph_match(arena, g, (slop_option_rdf_Term){.has_value = 1, .value = current}, (slop_option_rdf_Term){.has_value = 1, .value = first_pred}, no_obj);
                 if (((int64_t)((first_matches.triples).len)) > 0) {
-                    __auto_type _mv_52 = ({ __auto_type _lst = first_matches.triples; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
-                    if (_mv_52.has_value) {
-                        __auto_type first_triple = _mv_52.value;
+                    __auto_type _mv_213 = ({ __auto_type _lst = first_matches.triples; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
+                    if (_mv_213.has_value) {
+                        __auto_type first_triple = _mv_213.value;
                         ({ __auto_type _lst_p = &(result); __auto_type _item = (rdf_triple_object(first_triple)); if (_lst_p->len >= _lst_p->cap) { size_t _new_cap = _lst_p->cap == 0 ? 16 : _lst_p->cap * 2; __typeof__(_lst_p->data) _new_data = (__typeof__(_lst_p->data))slop_arena_alloc(arena, _new_cap * sizeof(*_lst_p->data)); if (_lst_p->len > 0) memcpy(_new_data, _lst_p->data, _lst_p->len * sizeof(*_lst_p->data)); _lst_p->data = _new_data; _lst_p->cap = _new_cap; } _lst_p->data[_lst_p->len++] = _item; (void)0; });
-                    } else if (!_mv_52.has_value) {
+                    } else if (!_mv_213.has_value) {
                     }
                 }
             }
             {
                 __auto_type rest_matches = rdf_graph_match(arena, g, (slop_option_rdf_Term){.has_value = 1, .value = current}, (slop_option_rdf_Term){.has_value = 1, .value = rest_pred}, no_obj);
                 if (((int64_t)((rest_matches.triples).len)) > 0) {
-                    __auto_type _mv_53 = ({ __auto_type _lst = rest_matches.triples; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
-                    if (_mv_53.has_value) {
-                        __auto_type rest_triple = _mv_53.value;
+                    __auto_type _mv_214 = ({ __auto_type _lst = rest_matches.triples; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
+                    if (_mv_214.has_value) {
+                        __auto_type rest_triple = _mv_214.value;
                         current = rdf_triple_object(rest_triple);
-                    } else if (!_mv_53.has_value) {
+                    } else if (!_mv_214.has_value) {
                         current = nil_term;
                     }
                 } else {
@@ -63,22 +63,22 @@ slop_list_rdf_Term rdf_list_elements_indexed(slop_arena* arena, index_IndexedGra
             {
                 __auto_type first_matches = rdf_indexed_graph_match(arena, g, (slop_option_rdf_Term){.has_value = 1, .value = current}, (slop_option_rdf_Term){.has_value = 1, .value = first_pred}, no_obj);
                 if (((int64_t)((first_matches).len)) > 0) {
-                    __auto_type _mv_54 = ({ __auto_type _lst = first_matches; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
-                    if (_mv_54.has_value) {
-                        __auto_type first_triple = _mv_54.value;
+                    __auto_type _mv_215 = ({ __auto_type _lst = first_matches; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
+                    if (_mv_215.has_value) {
+                        __auto_type first_triple = _mv_215.value;
                         ({ __auto_type _lst_p = &(result); __auto_type _item = (rdf_triple_object(first_triple)); if (_lst_p->len >= _lst_p->cap) { size_t _new_cap = _lst_p->cap == 0 ? 16 : _lst_p->cap * 2; __typeof__(_lst_p->data) _new_data = (__typeof__(_lst_p->data))slop_arena_alloc(arena, _new_cap * sizeof(*_lst_p->data)); if (_lst_p->len > 0) memcpy(_new_data, _lst_p->data, _lst_p->len * sizeof(*_lst_p->data)); _lst_p->data = _new_data; _lst_p->cap = _new_cap; } _lst_p->data[_lst_p->len++] = _item; (void)0; });
-                    } else if (!_mv_54.has_value) {
+                    } else if (!_mv_215.has_value) {
                     }
                 }
             }
             {
                 __auto_type rest_matches = rdf_indexed_graph_match(arena, g, (slop_option_rdf_Term){.has_value = 1, .value = current}, (slop_option_rdf_Term){.has_value = 1, .value = rest_pred}, no_obj);
                 if (((int64_t)((rest_matches).len)) > 0) {
-                    __auto_type _mv_55 = ({ __auto_type _lst = rest_matches; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
-                    if (_mv_55.has_value) {
-                        __auto_type rest_triple = _mv_55.value;
+                    __auto_type _mv_216 = ({ __auto_type _lst = rest_matches; size_t _idx = (size_t)0; slop_option_rdf_Triple _r = {0}; if (_idx < _lst.len) { _r.has_value = true; _r.value = _lst.data[_idx]; } else { _r.has_value = false; } _r; });
+                    if (_mv_216.has_value) {
+                        __auto_type rest_triple = _mv_216.value;
                         current = rdf_triple_object(rest_triple);
-                    } else if (!_mv_55.has_value) {
+                    } else if (!_mv_216.has_value) {
                         current = nil_term;
                     }
                 } else {

@@ -8,7 +8,7 @@ The crate compiles its bundled C sources from `build.rs`; consumers do not need
 to install SLOP separately. It provides native linkage and headers, but does not
 currently expose Rust FFI declarations.
 
-The vendored standard library and runtime snapshot comes from SLOP 0.2.1.
+The vendored standard library and runtime snapshot comes from SLOP 0.3.0.
 
 ## Usage
 
@@ -16,7 +16,7 @@ Add the crate as a direct dependency:
 
 ```toml
 [dependencies]
-slop-std-sys = "0.2.1"
+slop-std-sys = "0.3.0"
 ```
 
 Cargo makes the public C header directory available to your build script as

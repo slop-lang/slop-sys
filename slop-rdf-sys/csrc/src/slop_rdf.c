@@ -65,26 +65,26 @@ rdf_Term rdf_make_triple_term(slop_arena* arena, rdf_Triple t) {
 }
 
 rdf_TermKind rdf_term_kind(rdf_Term t) {
-    __auto_type _mv_0 = t;
-    switch (_mv_0.tag) {
+    __auto_type _mv_5 = t;
+    switch (_mv_5.tag) {
         case rdf_Term_term_iri:
         {
-            __auto_type _ = _mv_0.data.term_iri;
+            __auto_type _ = _mv_5.data.term_iri;
             return rdf_TermKind_iri;
         }
         case rdf_Term_term_blank:
         {
-            __auto_type _ = _mv_0.data.term_blank;
+            __auto_type _ = _mv_5.data.term_blank;
             return rdf_TermKind_blank;
         }
         case rdf_Term_term_literal:
         {
-            __auto_type _ = _mv_0.data.term_literal;
+            __auto_type _ = _mv_5.data.term_literal;
             return rdf_TermKind_literal;
         }
         case rdf_Term_term_triple:
         {
-            __auto_type _ = _mv_0.data.term_triple;
+            __auto_type _ = _mv_5.data.term_triple;
             return rdf_TermKind_triple;
         }
     }
@@ -106,23 +106,23 @@ uint8_t rdf_blank_eq(rdf_BlankNode a, rdf_BlankNode b) {
 }
 
 uint8_t rdf_option_string_eq(slop_option_string a, slop_option_string b) {
-    __auto_type _mv_1 = a;
-    if (_mv_1.has_value) {
-        __auto_type a_val = _mv_1.value;
-        __auto_type _mv_2 = b;
-        if (_mv_2.has_value) {
-            __auto_type b_val = _mv_2.value;
+    __auto_type _mv_6 = a;
+    if (_mv_6.has_value) {
+        __auto_type a_val = _mv_6.value;
+        __auto_type _mv_7 = b;
+        if (_mv_7.has_value) {
+            __auto_type b_val = _mv_7.value;
             return string_eq(a_val, b_val);
-        } else if (!_mv_2.has_value) {
+        } else if (!_mv_7.has_value) {
             return 0;
         }
         SLOP_UNREACHABLE();
-    } else if (!_mv_1.has_value) {
-        __auto_type _mv_3 = b;
-        if (_mv_3.has_value) {
-            __auto_type _ = _mv_3.value;
+    } else if (!_mv_6.has_value) {
+        __auto_type _mv_8 = b;
+        if (_mv_8.has_value) {
+            __auto_type _ = _mv_8.value;
             return 0;
-        } else if (!_mv_3.has_value) {
+        } else if (!_mv_8.has_value) {
             return 1;
         }
         SLOP_UNREACHABLE();
@@ -139,16 +139,16 @@ uint8_t rdf_literal_eq(rdf_Literal a, rdf_Literal b) {
 
 uint8_t rdf_term_eq(rdf_Term a, rdf_Term b) {
     uint8_t _retval = {0};
-    __auto_type _mv_4 = a;
-    switch (_mv_4.tag) {
+    __auto_type _mv_9 = a;
+    switch (_mv_9.tag) {
         case rdf_Term_term_iri:
         {
-            __auto_type a_iri = _mv_4.data.term_iri;
-            __auto_type _mv_5 = b;
-            switch (_mv_5.tag) {
+            __auto_type a_iri = _mv_9.data.term_iri;
+            __auto_type _mv_10 = b;
+            switch (_mv_10.tag) {
                 case rdf_Term_term_iri:
                 {
-                    __auto_type b_iri = _mv_5.data.term_iri;
+                    __auto_type b_iri = _mv_10.data.term_iri;
                     return rdf_iri_eq(a_iri, b_iri);
                 }
                 default: {
@@ -158,12 +158,12 @@ uint8_t rdf_term_eq(rdf_Term a, rdf_Term b) {
         }
         case rdf_Term_term_blank:
         {
-            __auto_type a_blank = _mv_4.data.term_blank;
-            __auto_type _mv_6 = b;
-            switch (_mv_6.tag) {
+            __auto_type a_blank = _mv_9.data.term_blank;
+            __auto_type _mv_11 = b;
+            switch (_mv_11.tag) {
                 case rdf_Term_term_blank:
                 {
-                    __auto_type b_blank = _mv_6.data.term_blank;
+                    __auto_type b_blank = _mv_11.data.term_blank;
                     return rdf_blank_eq(a_blank, b_blank);
                 }
                 default: {
@@ -173,12 +173,12 @@ uint8_t rdf_term_eq(rdf_Term a, rdf_Term b) {
         }
         case rdf_Term_term_literal:
         {
-            __auto_type a_lit = _mv_4.data.term_literal;
-            __auto_type _mv_7 = b;
-            switch (_mv_7.tag) {
+            __auto_type a_lit = _mv_9.data.term_literal;
+            __auto_type _mv_12 = b;
+            switch (_mv_12.tag) {
                 case rdf_Term_term_literal:
                 {
-                    __auto_type b_lit = _mv_7.data.term_literal;
+                    __auto_type b_lit = _mv_12.data.term_literal;
                     return rdf_literal_eq(a_lit, b_lit);
                 }
                 default: {
@@ -188,12 +188,12 @@ uint8_t rdf_term_eq(rdf_Term a, rdf_Term b) {
         }
         case rdf_Term_term_triple:
         {
-            __auto_type a_tt = _mv_4.data.term_triple;
-            __auto_type _mv_8 = b;
-            switch (_mv_8.tag) {
+            __auto_type a_tt = _mv_9.data.term_triple;
+            __auto_type _mv_13 = b;
+            switch (_mv_13.tag) {
                 case rdf_Term_term_triple:
                 {
-                    __auto_type b_tt = _mv_8.data.term_triple;
+                    __auto_type b_tt = _mv_13.data.term_triple;
                     return rdf_triple_eq((*a_tt), (*b_tt));
                 }
                 default: {
@@ -203,7 +203,7 @@ uint8_t rdf_term_eq(rdf_Term a, rdf_Term b) {
         }
     }
     SLOP_UNREACHABLE();
-    SLOP_POST(((_retval == ({ rdf_Term _eq_l_9 = (a); rdf_Term _eq_r_10 = (b); slop_eq_rdf_Term(&_eq_l_9, &_eq_r_10); }))), "(== $result (== a b))");
+    SLOP_POST(((_retval == ({ rdf_Term _eq_l_14 = (a); rdf_Term _eq_r_15 = (b); slop_eq_rdf_Term(&_eq_l_14, &_eq_r_15); }))), "(== $result (== a b))");
     return _retval;
 }
 
@@ -342,26 +342,26 @@ rdf_Graph rdf_graph_match(slop_arena* arena, rdf_Graph g, slop_option_rdf_Term s
 
 void rdf_term_free(rdf_Term* t) {
     SLOP_PRE(((t != NULL)), "(!= t nil)");
-    __auto_type _mv_11 = (*t);
-    switch (_mv_11.tag) {
+    __auto_type _mv_16 = (*t);
+    switch (_mv_16.tag) {
         case rdf_Term_term_iri:
         {
-            __auto_type _ = _mv_11.data.term_iri;
+            __auto_type _ = _mv_16.data.term_iri;
             break;
         }
         case rdf_Term_term_blank:
         {
-            __auto_type _ = _mv_11.data.term_blank;
+            __auto_type _ = _mv_16.data.term_blank;
             break;
         }
         case rdf_Term_term_literal:
         {
-            __auto_type _ = _mv_11.data.term_literal;
+            __auto_type _ = _mv_16.data.term_literal;
             break;
         }
         case rdf_Term_term_triple:
         {
-            __auto_type _ = _mv_11.data.term_triple;
+            __auto_type _ = _mv_16.data.term_triple;
             break;
         }
     }
