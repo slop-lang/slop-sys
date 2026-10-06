@@ -25,8 +25,7 @@ typedef struct n3_N3FileError n3_N3FileError;
 typedef int64_t n3_FormulaId;
 
 static inline n3_FormulaId n3_FormulaId_new(int64_t v) {
-SLOP_PRE(v >= 0, "n3_FormulaId >= 0");
-return (n3_FormulaId)v;
+return SLOP_RANGE(n3_FormulaId, v, 1, 0, 0, 0, "FormulaId (Int 0 ..)");
 }
 
 struct n3_Formula {
