@@ -15,8 +15,8 @@ sources from `build.rs`, so consumers do not need to install the SLOP libraries
 separately. The crates provide native libraries and header paths for downstream
 build scripts; they do not currently expose Rust FFI declarations.
 
-The current standard-library snapshot comes from SLOP v0.3.0. The RDF snapshot
-was generated from `slop-rdf` v0.4.0 with SLOP v0.3.0. These versions are also
+The current standard-library snapshot comes from SLOP v0.4.0. The RDF snapshot
+was generated from `slop-rdf` v0.5.0 with SLOP v0.4.0. These versions are also
 recorded in each crate's package metadata.
 
 ## Requirements
@@ -43,8 +43,8 @@ Use the published crates from another Cargo project:
 
 ```toml
 [dependencies]
-slop-std-sys = "0.3.0"
-slop-rdf-sys = "0.4.0"
+slop-std-sys = "0.4.0"
+slop-rdf-sys = "0.5.0"
 ```
 
 For local development, use path dependencies instead:

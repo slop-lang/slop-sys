@@ -17,7 +17,7 @@ slop_result_int_file_FileError file_file_size(slop_string path);
 slop_result_file_File_file_FileError file_file_open(slop_string path, file_FileMode mode) {
     SLOP_PRE(((path.len > 0)), "(> (. path len) 0)");
     {
-        __auto_type mode_str = (mode == file_FileMode_read ? SLOP_STR("r") : (mode == file_FileMode_write ? SLOP_STR("w") : (mode == file_FileMode_append ? SLOP_STR("a") : (mode == file_FileMode_read_write ? SLOP_STR("r+") : (mode == file_FileMode_write_read ? SLOP_STR("w+") : SLOP_STR("a+"))))));
+        __auto_type mode_str = ({ __auto_type _mv = mode; int _mi = (_mv == file_FileMode_read) ? 1 : (_mv == file_FileMode_write) ? 2 : (_mv == file_FileMode_append) ? 3 : (_mv == file_FileMode_read_write) ? 4 : (_mv == file_FileMode_write_read) ? 5 : (_mv == file_FileMode_append_read) ? 6 : 0; if (!_mi) { SLOP_UNREACHABLE(); } _mi == 1 ? (SLOP_STR("r")) : _mi == 2 ? (SLOP_STR("w")) : _mi == 3 ? (SLOP_STR("a")) : _mi == 4 ? (SLOP_STR("r+")) : _mi == 5 ? (SLOP_STR("w+")) : (SLOP_STR("a+")); });
         {
             __auto_type handle = fopen(((uint8_t*)(path.data)), ((uint8_t*)(mode_str.data)));
             if (handle == NULL) {
@@ -37,10 +37,13 @@ slop_result_u8_file_FileError file_file_close(file_File* f) {
         __auto_type result = fclose((*f).handle);
         if (result == 0) {
             _retval = ((slop_result_u8_file_FileError){ .is_ok = true, .data.ok = 1 });
+            goto _slop_post;
         } else {
             _retval = ((slop_result_u8_file_FileError){ .is_ok = false, .data.err = file_FileError_io_error });
+            goto _slop_post;
         }
     }
+    _slop_post: ;
     SLOP_POST((!((*f).is_open)), "(not (. (deref f) is-open))");
     return _retval;
 }
@@ -105,7 +108,7 @@ slop_result_int_file_FileError file_file_write(file_File* f, slop_bytes data) {
         if (ferror((*f).handle) != 0) {
             return ((slop_result_int_file_FileError){ .is_ok = false, .data.err = file_FileError_io_error });
         } else {
-            return ((slop_result_int_file_FileError){ .is_ok = true, .data.ok = ((int64_t)(written)) });
+            return ((slop_result_int_file_FileError){ .is_ok = true, .data.ok = ((int64_t)(SLOP_RANGE(int64_t, written, 1, 0, 0, 0, "(Int 0 ..) at file.slop:182:30"))) });
         }
     }
 }
@@ -119,7 +122,7 @@ slop_result_int_file_FileError file_file_write_line(file_File* f, slop_string li
             if (ferror((*f).handle) != 0) {
                 return ((slop_result_int_file_FileError){ .is_ok = false, .data.err = file_FileError_io_error });
             } else {
-                return ((slop_result_int_file_FileError){ .is_ok = true, .data.ok = ((int64_t)((written1 + written2))) });
+                return ((slop_result_int_file_FileError){ .is_ok = true, .data.ok = ((int64_t)(SLOP_RANGE(int64_t, (written1 + written2), 1, 0, 0, 0, "(Int 0 ..) at file.slop:193:32"))) });
             }
         }
     }
@@ -171,19 +174,27 @@ slop_result_int_file_FileError file_file_size(slop_string path) {
         #ifdef SLOP_DEBUG
         SLOP_PRE((256) > 0, "with-arena size must be positive");
         #endif
-        slop_arena _arena = slop_arena_new(256);
+        slop_arena _arena_3 = slop_arena_new(256);
         #ifdef SLOP_DEBUG
-        SLOP_PRE(_arena.base != NULL, "arena allocation failed");
+        SLOP_PRE(_arena_3.base != NULL, "arena allocation failed");
         #endif
-        slop_arena* arena = &_arena;
+        slop_arena* arena = &_arena_3;
         {
             __auto_type buf = ({ __auto_type _alloc = (struct stat*)slop_arena_alloc(arena, sizeof(struct stat)); if (_alloc == NULL) { fprintf(stderr, "SLOP: arena alloc failed at %s:%d\n", __FILE__, __LINE__); abort(); } _alloc; });
             {
                 __auto_type result = stat(((uint8_t*)(path.data)), ((void*)(buf)));
                 if (result != 0) {
-                    return ((slop_result_int_file_FileError){ .is_ok = false, .data.err = file_FileError_not_found });
+                    {
+                        slop_result_int_file_FileError _wa_ret = ((slop_result_int_file_FileError){ .is_ok = false, .data.err = file_FileError_not_found });
+                        slop_arena_free(&_arena_3);
+                        return _wa_ret;
+                    }
                 } else {
-                    return ((slop_result_int_file_FileError){ .is_ok = true, .data.ok = ((int64_t)(((struct stat*)(buf))->st_size)) });
+                    {
+                        slop_result_int_file_FileError _wa_ret = ((slop_result_int_file_FileError){ .is_ok = true, .data.ok = ((int64_t)(((struct stat*)(buf))->st_size)) });
+                        slop_arena_free(&_arena_3);
+                        return _wa_ret;
+                    }
                 }
             }
         }

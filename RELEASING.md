@@ -42,7 +42,7 @@ Wait until Cargo can retrieve the exact published version from the crates.io
 index:
 
 ```sh
-cargo info slop-std-sys@0.3.0
+cargo info slop-std-sys@0.4.0
 ```
 
 Then publish the dependent crate:
@@ -61,7 +61,7 @@ After both crates are confirmed on crates.io, create annotated, crate-specific
 tags on the exact published commit. Do not move the existing workspace tags.
 
 ```sh
-git tag -a slop-std-sys-v0.3.0 -m "Release slop-std-sys 0.3.0"
-git tag -a slop-rdf-sys-v0.4.0 -m "Release slop-rdf-sys 0.4.0"
-git push origin slop-std-sys-v0.3.0 slop-rdf-sys-v0.4.0
+git tag -a slop-std-sys-v0.4.0 -m "Release slop-std-sys 0.4.0"
+git tag -a slop-rdf-sys-v0.5.0 -m "Release slop-rdf-sys 0.5.0"
+git push origin slop-std-sys-v0.4.0 slop-rdf-sys-v0.5.0
 ```
