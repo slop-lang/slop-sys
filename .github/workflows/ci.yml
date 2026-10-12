@@ -15,7 +15,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        # windows-latest builds for x86_64-pc-windows-msvc, where cc-rs
+        # compiles the vendored C with clang-cl
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
@@ -27,6 +29,24 @@ jobs:
       - run: cargo doc --workspace --no-deps
         env:
           RUSTDOCFLAGS: -D warnings
+
+  windows-gnu:
+    name: Stable (windows-latest, GNU)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-gnu
+      # MinGW-w64 gcc for cc-rs; MINGW64 is msvcrt-based, like windows-gnu
+      - uses: msys2/setup-msys2@v2
+        id: msys2
+        with:
+          msystem: MINGW64
+          install: mingw-w64-x86_64-gcc
+      - run: echo "${{ steps.msys2.outputs.msys2-location }}\mingw64\bin" >> $env:GITHUB_PATH
+        shell: pwsh
+      - run: cargo test --workspace --all-targets --target x86_64-pc-windows-gnu
 
   msrv:
     name: Rust 1.63 (Ubuntu)

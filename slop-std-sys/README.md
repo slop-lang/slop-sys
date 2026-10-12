@@ -8,7 +8,7 @@ The crate compiles its bundled C sources from `build.rs`; consumers do not need
 to install SLOP separately. It provides native linkage and headers, but does not
 currently expose Rust FFI declarations.
 
-The vendored standard library and runtime snapshot comes from SLOP 0.4.0.
+The vendored standard library and runtime snapshot comes from SLOP 0.4.2.
 
 ## Usage
 
@@ -16,7 +16,7 @@ Add the crate as a direct dependency:
 
 ```toml
 [dependencies]
-slop-std-sys = "0.4.0"
+slop-std-sys = "0.4.2"
 ```
 
 Cargo makes the public C header directory available to your build script as
@@ -35,8 +35,13 @@ cc::Build::new()
 ## Requirements
 
 - Rust 1.63 or newer
-- A C compiler supported by the `cc` crate
-- POSIX threads (`pthread`)
+- A C compiler supported by the `cc` crate that accepts GNU C extensions:
+  GCC or Clang, MinGW-w64 GCC for `*-windows-gnu`, or clang-cl for
+  `*-windows-msvc` (Visual Studio's C++ Clang tools or LLVM). MSVC's
+  `cl.exe` can't compile the generated C, so the build uses clang-cl on
+  MSVC targets unless `CC` names another compiler.
+- POSIX threads (`pthread`) on Unix targets; Windows targets use the Win32
+  thread API
 
 ## License
 

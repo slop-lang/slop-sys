@@ -568,8 +568,8 @@ slop_result_u8_serialize_ttl_TtlFileError serialize_ttl_serialize_ttl_stream(slo
                         for (size_t _i = 0; _i < _coll.len; _i++) {
                             __auto_type triple = _coll.data[_i];
                             {
-                                slop_arena _arena_4 = slop_arena_new(4096);
-                                slop_arena* arena = &_arena_4;
+                                slop_arena _arena_3 = slop_arena_new(4096);
+                                slop_arena* arena = &_arena_3;
                                 {
                                     __auto_type subj_str = serialize_ttl_serialize_term(arena, triple.subject, prefixes);
                                     __auto_type pred_str = serialize_ttl_serialize_term(arena, triple.predicate, prefixes);

@@ -8,7 +8,7 @@ The crate compiles its bundled C sources from `build.rs` and depends on
 `slop-std-sys` for runtime, string, and file symbols. It provides native linkage
 and headers, but does not currently expose Rust FFI declarations.
 
-The vendored snapshot contains `slop-rdf` 0.5.0 generated with SLOP 0.4.0.
+The vendored snapshot contains `slop-rdf` 0.5.1 generated with SLOP 0.4.2.
 
 ## Usage
 
@@ -18,8 +18,8 @@ header directories available to your build script:
 
 ```toml
 [dependencies]
-slop-rdf-sys = "0.5.0"
-slop-std-sys = "0.4.0"
+slop-rdf-sys = "0.5.1"
+slop-std-sys = "0.4.2"
 ```
 
 ```rust
@@ -43,8 +43,12 @@ sources include standard-library headers such as `slop_strlib.h` or
 ## Requirements
 
 - Rust 1.63 or newer
-- A C compiler supported by the `cc` crate
-- POSIX threads (`pthread`), through `slop-std-sys`
+- A C compiler supported by the `cc` crate that accepts GNU C extensions:
+  GCC or Clang, MinGW-w64 GCC for `*-windows-gnu`, or clang-cl for
+  `*-windows-msvc` (Visual Studio's C++ Clang tools or LLVM). MSVC's
+  `cl.exe` can't compile the generated C, so the build uses clang-cl on
+  MSVC targets unless `CC` names another compiler.
+- POSIX threads (`pthread`) on Unix targets, through `slop-std-sys`
 
 ## License
 

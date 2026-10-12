@@ -23,7 +23,10 @@ fn main() {
     ];
 
     let mut build = cc::Build::new();
+    // The generated C uses GNU statement expressions and __auto_type, which
+    // MSVC's cl.exe rejects; clang-cl accepts them. CC still overrides this.
     build
+        .prefer_clang_cl_over_msvc(true)
         .include(runtime)
         .include(csrc)
         .include(&std_inc)
