@@ -14,7 +14,10 @@ fn main() {
     ];
 
     let mut build = cc::Build::new();
+    // The generated C uses GNU statement expressions and __auto_type, which
+    // MSVC's cl.exe rejects; clang-cl accepts them. CC still overrides this.
     build
+        .prefer_clang_cl_over_msvc(true)
         .include(runtime)
         .include(csrc)
         .define("SLOP_ARENA_NO_CAP", None)
@@ -27,7 +30,10 @@ fn main() {
     build.compile("slop_std");
 
     println!("cargo:include={}", manifest.join("csrc/src").display());
-    println!("cargo:rustc-link-lib=pthread");
+    // slop_runtime.h threads through pthreads on POSIX and Win32 on Windows.
+    if env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
+        println!("cargo:rustc-link-lib=pthread");
+    }
     println!("cargo:rerun-if-changed=csrc");
     println!("cargo:rerun-if-changed=build.rs");
 }

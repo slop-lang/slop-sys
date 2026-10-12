@@ -15,15 +15,20 @@ sources from `build.rs`, so consumers do not need to install the SLOP libraries
 separately. The crates provide native libraries and header paths for downstream
 build scripts; they do not currently expose Rust FFI declarations.
 
-The current standard-library snapshot comes from SLOP v0.4.0. The RDF snapshot
-was generated from `slop-rdf` v0.5.0 with SLOP v0.4.0. These versions are also
+The current standard-library snapshot comes from SLOP v0.4.2. The RDF snapshot
+was generated from `slop-rdf` v0.5.1 with SLOP v0.4.2. These versions are also
 recorded in each crate's package metadata.
 
 ## Requirements
 
 - A Rust toolchain with Cargo
-- A C compiler supported by the [`cc`](https://crates.io/crates/cc) crate
-- POSIX threads (`pthread`), required by `slop-std-sys`
+- A C compiler supported by the [`cc`](https://crates.io/crates/cc) crate that accepts GNU C extensions:
+  GCC or Clang, MinGW-w64 GCC for `*-windows-gnu`, or clang-cl for
+  `*-windows-msvc` (Visual Studio's C++ Clang tools or LLVM). MSVC's
+  `cl.exe` can't compile the generated C, so the build uses clang-cl on
+  MSVC targets unless `CC` names another compiler.
+- POSIX threads (`pthread`) on Unix targets, required by `slop-std-sys`;
+  Windows targets use the Win32 thread API
 
 ## Building
 
@@ -43,8 +48,8 @@ Use the published crates from another Cargo project:
 
 ```toml
 [dependencies]
-slop-std-sys = "0.4.0"
-slop-rdf-sys = "0.5.0"
+slop-std-sys = "0.4.2"
+slop-rdf-sys = "0.5.1"
 ```
 
 For local development, use path dependencies instead:
