@@ -30,19 +30,19 @@ struct SlopClosure {
 }
 
 extern "C" {
-    fn strlib_min(a: i64, b: i64) -> i64;
+    fn std_strlib_min(a: i64, b: i64) -> i64;
 
-    fn file_file_exists(path: SlopString) -> u8;
-    fn file_file_size(path: SlopString) -> ResultInt;
+    fn std_file_file_exists(path: SlopString) -> u8;
+    fn std_file_file_size(path: SlopString) -> ResultInt;
 
     fn slopsys_arena_new(capacity: usize) -> *mut c_void;
     fn slopsys_arena_free(arena: *mut c_void);
-    fn thread_chan_buffered(arena: *mut c_void, capacity: i64) -> *mut c_void;
-    fn thread_send(ch: *mut c_void, value: i64) -> ResultVoid;
-    fn thread_recv(ch: *mut c_void) -> ResultInt;
-    fn thread_chan_close(ch: *mut c_void);
-    fn thread_spawn(arena: *mut c_void, func: SlopClosure) -> *mut c_void;
-    fn thread_join(thread: *mut c_void) -> i64;
+    fn std_thread_chan_buffered(arena: *mut c_void, capacity: i64) -> *mut c_void;
+    fn std_thread_send(ch: *mut c_void, value: i64) -> ResultVoid;
+    fn std_thread_recv(ch: *mut c_void) -> ResultInt;
+    fn std_thread_chan_close(ch: *mut c_void);
+    fn std_thread_spawn(arena: *mut c_void, func: SlopClosure) -> *mut c_void;
+    fn std_thread_join(thread: *mut c_void) -> i64;
 }
 
 /// The runtime passes the path's data to the C library as a C string
@@ -55,16 +55,16 @@ fn slop_str(nul_terminated: &'static [u8]) -> SlopString {
 
 #[test]
 fn links_and_calls_slop_std() {
-    assert_eq!(unsafe { strlib_min(-7, 4) }, -7);
+    assert_eq!(unsafe { std_strlib_min(-7, 4) }, -7);
 }
 
 #[test]
 fn file_exists_and_size_use_the_platform_crt() {
     let expected = std::fs::metadata("Cargo.toml").unwrap().len() as i64;
     unsafe {
-        assert_ne!(file_file_exists(slop_str(b"Cargo.toml\0")), 0);
-        assert_eq!(file_file_exists(slop_str(b"no-such-file.toml\0")), 0);
-        let size = file_file_size(slop_str(b"Cargo.toml\0"));
+        assert_ne!(std_file_file_exists(slop_str(b"Cargo.toml\0")), 0);
+        assert_eq!(std_file_file_exists(slop_str(b"no-such-file.toml\0")), 0);
+        let size = std_file_file_size(slop_str(b"Cargo.toml\0"));
         assert!(size.is_ok);
         assert_eq!(size.data, expected);
     }
@@ -80,19 +80,19 @@ fn threads_and_channels_use_the_portable_runtime_api() {
         let arena = slopsys_arena_new(4096);
         assert!(!arena.is_null());
 
-        let ch = thread_chan_buffered(arena, 2);
-        assert!(thread_send(ch, 7).is_ok);
-        let got = thread_recv(ch);
+        let ch = std_thread_chan_buffered(arena, 2);
+        assert!(std_thread_send(ch, 7).is_ok);
+        let got = std_thread_recv(ch);
         assert!(got.is_ok);
         assert_eq!(got.data, 7);
-        thread_chan_close(ch);
+        std_thread_chan_close(ch);
 
         let closure = SlopClosure {
             func: forty_two,
             env: std::ptr::null_mut(),
         };
-        let thread = thread_spawn(arena, closure);
-        assert_eq!(thread_join(thread), 42);
+        let thread = std_thread_spawn(arena, closure);
+        assert_eq!(std_thread_join(thread), 42);
 
         slopsys_arena_free(arena);
     }
