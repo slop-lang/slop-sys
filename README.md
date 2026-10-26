@@ -16,7 +16,7 @@ separately. The crates provide native libraries and header paths for downstream
 build scripts; they do not currently expose Rust FFI declarations.
 
 The current standard-library snapshot comes from SLOP v0.5.0. The RDF snapshot
-was generated from `slop-rdf` v0.6.0 with SLOP v0.5.0. These versions are also
+was generated from `slop-rdf` v0.6.1 with SLOP v0.5.0. These versions are also
 recorded in each crate's package metadata.
 
 Since SLOP 0.5.0, generated C names carry their package: the standard
@@ -58,7 +58,7 @@ Use the published crates from another Cargo project:
 ```toml
 [dependencies]
 slop-std-sys = "0.5.0"
-slop-rdf-sys = "0.6.0"
+slop-rdf-sys = "0.6.1"
 ```
 
 For local development, use path dependencies instead:
