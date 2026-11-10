@@ -7,6 +7,7 @@ slop_string slop_rdf_serialize_ttl_escape_string(slop_arena* arena, slop_string 
 uint8_t slop_rdf_serialize_ttl_string_contains_newline(slop_string s);
 uint8_t slop_rdf_serialize_ttl_valid_pn_local(slop_string s);
 slop_string slop_rdf_serialize_ttl_serialize_iri(slop_arena* arena, slop_rdf_rdf_IRI iri, slop_rdf_ttl_PrefixMap prefixes);
+int64_t slop_rdf_serialize_ttl_turtle_number_kind(slop_string s);
 slop_string slop_rdf_serialize_ttl_serialize_literal(slop_arena* arena, slop_rdf_rdf_Literal lit);
 slop_string slop_rdf_serialize_ttl_serialize_blank(slop_arena* arena, slop_rdf_rdf_BlankNode node);
 slop_string slop_rdf_serialize_ttl_serialize_term(slop_arena* arena, slop_rdf_rdf_Term t, slop_rdf_ttl_PrefixMap prefixes);
@@ -177,6 +178,74 @@ slop_string slop_rdf_serialize_ttl_serialize_iri(slop_arena* arena, slop_rdf_rdf
     return _retval;
 }
 
+int64_t slop_rdf_serialize_ttl_turtle_number_kind(slop_string s) {
+    int64_t _retval = {0};
+    {
+        __auto_type len = string_len(s);
+        int64_t i = 0;
+        int64_t int_digits = 0;
+        int64_t frac_digits = 0;
+        int64_t exp_digits = 0;
+        uint8_t dot = 0;
+        uint8_t exp = 0;
+        if ((std_strlib_char_at(s, 0) == 43) || (std_strlib_char_at(s, 0) == 45)) {
+            i = 1;
+        }
+        while (std_strlib_is_digit(std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:219:35")))) {
+            int_digits = (int_digits + 1);
+            i = (i + 1);
+        }
+        if (std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:222:28")) == 46) {
+            dot = 1;
+            i = (i + 1);
+            while (std_strlib_is_digit(std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:225:37")))) {
+                frac_digits = (frac_digits + 1);
+                i = (i + 1);
+            }
+        }
+        if ((std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:228:32")) == 101) || (std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:228:55")) == 69)) {
+            exp = 1;
+            i = (i + 1);
+            if ((std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:231:34")) == 43) || (std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:231:56")) == 45)) {
+                i = (i + 1);
+            }
+            while (std_strlib_is_digit(std_strlib_char_at(s, SLOP_RANGE(int64_t, i, 1, 0, 0, 0, "(Int 0 ..) at serialize-ttl.slop:233:37")))) {
+                exp_digits = (exp_digits + 1);
+                i = (i + 1);
+            }
+        }
+        if (i != len) {
+            _retval = 0;
+            goto _slop_post;
+        } else if (exp) {
+            if ((exp_digits > 0) && ((int_digits + frac_digits) > 0)) {
+                _retval = 3;
+                goto _slop_post;
+            } else {
+                _retval = 0;
+                goto _slop_post;
+            }
+        } else if (dot) {
+            if (frac_digits > 0) {
+                _retval = 2;
+                goto _slop_post;
+            } else {
+                _retval = 0;
+                goto _slop_post;
+            }
+        } else if (int_digits > 0) {
+            _retval = 1;
+            goto _slop_post;
+        } else {
+            _retval = 0;
+            goto _slop_post;
+        }
+    }
+    _slop_post: ;
+    SLOP_POST((((_retval >= 0) && (_retval <= 3))), "(and (>= $result 0) (<= $result 3))");
+    return _retval;
+}
+
 slop_string slop_rdf_serialize_ttl_serialize_literal(slop_arena* arena, slop_rdf_rdf_Literal lit) {
     slop_string _retval = {0};
     {
@@ -192,16 +261,16 @@ slop_string slop_rdf_serialize_ttl_serialize_literal(slop_arena* arena, slop_rdf
             __auto_type _mv_36 = dt;
             if (_mv_36.has_value) {
                 __auto_type dt_iri = _mv_36.value;
-                if (string_eq(dt_iri, slop_rdf_vocab_XSD_INTEGER)) {
+                if (string_eq(dt_iri, slop_rdf_vocab_XSD_INTEGER) && (slop_rdf_serialize_ttl_turtle_number_kind(val) == 1)) {
                     _retval = val;
                     goto _slop_post;
-                } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_DECIMAL)) {
+                } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_DECIMAL) && (slop_rdf_serialize_ttl_turtle_number_kind(val) == 2)) {
                     _retval = val;
                     goto _slop_post;
-                } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_DOUBLE)) {
+                } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_DOUBLE) && (slop_rdf_serialize_ttl_turtle_number_kind(val) == 3)) {
                     _retval = val;
                     goto _slop_post;
-                } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_BOOLEAN)) {
+                } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_BOOLEAN) && (string_eq(val, SLOP_STR("true")) || string_eq(val, SLOP_STR("false")))) {
                     _retval = val;
                     goto _slop_post;
                 } else if (string_eq(dt_iri, slop_rdf_vocab_XSD_STRING)) {
